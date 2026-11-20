@@ -1,0 +1,23 @@
+{
+  "name": "CAT112 · Guardia 12h",
+  "short_name": "CAT112",
+  "description": "Simulador CAD, Guardia 12h, Directorio CAT y Xarxa RESCAT",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0b101b",
+  "theme_color": "#0b101b",
+  "icons": [
+    {
+      "src": "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f6a8.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/1f6a8.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
