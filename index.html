@@ -11,7 +11,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="min-h-screen lg:h-screen flex flex-col lg:overflow-hidden select-none">
+<body class="min-h-screen lg:h-screen flex flex-col lg:overflow-hidden select-none bg-[#090d16] text-slate-100">
 
   <!-- CABECERA OPERATIVA + GUARDIA DE 12 HORAS -->
   <header class="bg-[#0b101b] border-b border-slate-800 px-3 py-1.5 flex flex-wrap justify-between items-center gap-2 text-xs">
@@ -31,7 +31,7 @@
         ⏸ Pausar Guardia
       </button>
 
-      <select id="velocidadGuardia" onchange="actualizarVelocidadGuardia()" class="bg-slate-800 border border-slate-700 rounded px-1.5 py-1 text-[11px] text-sky-300 font-mono" title="Velocidad del reloj de guardia">
+      <select id="velocidadGuardia" class="bg-slate-800 border border-slate-700 rounded px-1.5 py-1 text-[11px] text-sky-300 font-mono" title="Velocidad del reloj de guardia">
         <option value="1">1x (Real)</option>
         <option value="15" selected>15x (15m = 1m)</option>
         <option value="60">60x (15m = 15s)</option>
@@ -42,7 +42,7 @@
         <span id="relojGuardia" class="font-mono text-xs font-bold text-emerald-400">00:00 / 12:00</span>
       </div>
 
-      <button id="btnSonido" type="button" onclick="toggleSonido()" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 px-2 py-1 rounded font-semibold">
+      <button id="btnSonido" type="button" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 px-2 py-1 rounded font-semibold">
         🔊 ON
       </button>
 
@@ -51,7 +51,7 @@
         <option value="ca-ES">Català</option>
       </select>
 
-      <button id="btnSimularLlamada" type="button" onclick="iniciarLlamada()" class="touch-manipulation bg-sky-700 hover:bg-sky-600 text-white font-bold px-2.5 py-1 rounded">
+      <button id="btnSimularLlamada" type="button" class="touch-manipulation bg-sky-700 hover:bg-sky-600 text-white font-bold px-2.5 py-1 rounded">
         📞 Forzar [F2]
       </button>
 
@@ -79,7 +79,7 @@
       <span>EXPEDIENTE: <strong id="idIncidente" class="font-mono text-amber-400">SIN ASIGNAR</strong></span>
       <span>LÍNEA: <strong id="lineaActivaBadge" class="text-sky-400">NINGUNA</strong></span>
       <span>COLA 112: <strong id="colaLlamadasBadge" class="font-mono text-emerald-400">0</strong></span>
-      <button id="btnAtenderCola" type="button" onclick="atenderSiguienteEnCola()" class="touch-manipulation hidden bg-amber-600 hover:bg-amber-500 text-white font-bold px-2 py-0.5 rounded text-[10px] blink">
+      <button id="btnAtenderCola" type="button" class="touch-manipulation hidden bg-amber-600 hover:bg-amber-500 text-white font-bold px-2 py-0.5 rounded text-[10px]">
         📲 Atender Llamada en Espera
       </button>
       <span id="badgeRiesgo" class="hidden px-2 py-0.5 rounded font-bold text-[10px] bg-red-950 text-red-300 border border-red-700">P1 · CRÍTICA</span>
@@ -99,7 +99,7 @@
     <section class="lg:col-span-4 bg-[#131c2e] rounded border border-slate-800 p-2.5 flex flex-col gap-2 lg:overflow-y-auto">
       <div class="flex justify-between items-center border-b border-slate-800 pb-1">
         <span class="text-[11px] font-bold uppercase tracking-wider text-sky-400">1. Carta de Llamada (CAD)</span>
-        <button type="button" onclick="limpiarFormulario()" class="text-[11px] text-slate-400 hover:text-slate-200 underline">Limpiar</button>
+        <button id="btnLimpiarForm" type="button" class="touch-manipulation text-[11px] text-slate-400 hover:text-slate-200 underline">Limpiar</button>
       </div>
 
       <div class="grid grid-cols-2 gap-2">
@@ -117,7 +117,7 @@
         <label class="block text-[11px] text-slate-400 mb-0.5">Ubicación / Vía / PK / Municipio</label>
         <div class="flex gap-1">
           <input id="direccion" type="text" class="flex-1 bg-[#0b101b] border border-slate-700 rounded px-2 py-1 text-xs text-slate-100" placeholder="Dirección o punto kilométrico">
-          <button type="button" onclick="validarLocalizacionManual()" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-600 px-2 py-1 rounded text-[11px] text-sky-300 font-semibold">
+          <button id="btnValidarLoc" type="button" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-600 px-2 py-1 rounded text-[11px] text-sky-300 font-semibold">
             Validar
           </button>
         </div>
@@ -138,7 +138,7 @@
         </div>
         <div>
           <label class="block text-[11px] text-slate-400 mb-0.5">Prioridad</label>
-          <select id="prioridad" onchange="actualizarBadgeRiesgo()" class="w-full bg-[#0b101b] border border-slate-700 rounded px-2 py-1 text-xs text-slate-100">
+          <select id="prioridad" class="w-full bg-[#0b101b] border border-slate-700 rounded px-2 py-1 text-xs text-slate-100">
             <option value="ALTA">P1 · Crítica</option>
             <option value="MEDIA">P2 · Urgente</option>
             <option value="BAJA">P3 · Leve</option>
@@ -172,16 +172,16 @@
       <div class="flex justify-between items-center mb-1.5 px-1 gap-1">
         <span class="text-[11px] font-bold uppercase tracking-wider text-sky-400">2. Cartografía GIS</span>
         <div class="flex items-center gap-1">
-          <button type="button" onclick="cambiarCapaMapa()" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-700 px-2 py-0.5 rounded text-[10px] text-slate-300">
+          <button id="btnCapaMapa" type="button" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-700 px-2 py-0.5 rounded text-[10px] text-slate-300">
             🗺️ Capa
           </button>
-          <button type="button" onclick="centrarEnIncidente()" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-700 px-2 py-0.5 rounded text-[10px] text-slate-300">
+          <button id="btnCentrarMapa" type="button" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-700 px-2 py-0.5 rounded text-[10px] text-slate-300">
             🎯 Centrar
           </button>
           <span id="coordsText" class="text-[10px] font-mono text-slate-400">41.6894, 2.4922</span>
         </div>
       </div>
-      <div id="map" class="flex-1"></div>
+      <div id="map" class="flex-1 min-h-[220px] rounded"></div>
     </section>
 
     <!-- COLUMNA DERECHA: CENTRALITA CAPs + DIRECTORIO CAT + XARXA RESCAT (4 COLS) -->
@@ -195,25 +195,25 @@
         </div>
 
         <div class="grid grid-cols-3 gap-1 mb-1.5 text-[10px]">
-          <button type="button" onclick="llamarCAP('CAP de Sala')" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold py-1 px-1.5 rounded truncate">
+          <button type="button" data-cap="CAP de Sala" class="btn-cap touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold py-1 px-1.5 rounded truncate">
             📞 CAP Sala
           </button>
-          <button type="button" onclick="llamarCAP('CAP 061')" class="touch-manipulation bg-amber-950 hover:bg-amber-900 border border-amber-700 text-amber-300 font-bold py-1 px-1.5 rounded truncate">
+          <button type="button" data-cap="CAP 061" class="btn-cap touch-manipulation bg-amber-950 hover:bg-amber-900 border border-amber-700 text-amber-300 font-bold py-1 px-1.5 rounded truncate">
             📞 CAP 061
           </button>
-          <button type="button" onclick="llamarCAP('CAP Mossos')" class="touch-manipulation bg-blue-950 hover:bg-blue-900 border border-blue-700 text-blue-300 font-bold py-1 px-1.5 rounded truncate">
+          <button type="button" data-cap="CAP Mossos" class="btn-cap touch-manipulation bg-blue-950 hover:bg-blue-900 border border-blue-700 text-blue-300 font-bold py-1 px-1.5 rounded truncate">
             📞 CAP Mossos
           </button>
-          <button type="button" onclick="llamarCAP('CAP Bombers')" class="touch-manipulation bg-red-950 hover:bg-red-900 border border-red-700 text-red-300 font-bold py-1 px-1.5 rounded truncate">
+          <button type="button" data-cap="CAP Bombers" class="btn-cap touch-manipulation bg-red-950 hover:bg-red-900 border border-red-700 text-red-300 font-bold py-1 px-1.5 rounded truncate">
             📞 CAP Bombers
           </button>
-          <button type="button" onclick="llamarCAP('CAP Protecció Civil')" class="touch-manipulation col-span-2 bg-orange-950 hover:bg-orange-900 border border-orange-700 text-orange-300 font-bold py-1 px-1.5 rounded truncate">
+          <button type="button" data-cap="CAP Protecció Civil" class="btn-cap touch-manipulation col-span-2 bg-orange-950 hover:bg-orange-900 border border-orange-700 text-orange-300 font-bold py-1 px-1.5 rounded truncate">
             📞 CAP Protecció Civil
           </button>
         </div>
 
         <div class="grid grid-cols-12 gap-1 mb-1.5">
-          <select id="categoriaDirectorio" onchange="actualizarListaCentros()" class="col-span-5 bg-slate-950 border border-slate-700 rounded px-1.5 py-1 text-[10px] text-sky-300 font-semibold">
+          <select id="categoriaDirectorio" class="col-span-5 bg-slate-950 border border-slate-700 rounded px-1.5 py-1 text-[10px] text-sky-300 font-semibold">
             <option value="HOSPITALES">🏥 Hospitales CAT</option>
             <option value="MOSSOS">🚓 Comisarías Mossos</option>
             <option value="BOMBERS">🚒 Bases Bombers</option>
@@ -223,7 +223,7 @@
           <select id="centroDirectorio" class="col-span-5 bg-slate-950 border border-slate-700 rounded px-1.5 py-1 text-[10px] text-slate-200 truncate">
           </select>
 
-          <button type="button" onclick="llamarCentroSeleccionado()" class="touch-manipulation col-span-2 bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-1 rounded text-[10px]" title="Llamar y ubicar en mapa">
+          <button id="btnLlamarCentro" type="button" class="touch-manipulation col-span-2 bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-1 rounded text-[10px]" title="Llamar y ubicar en mapa">
             Llamar
           </button>
         </div>
@@ -233,10 +233,10 @@
         </div>
 
         <div class="flex gap-1.5">
-          <button id="btnHablar" type="button" onclick="activarMicrofono()" disabled class="touch-manipulation flex-1 bg-sky-600 hover:bg-sky-500 disabled:opacity-40 text-white text-xs font-bold py-1.5 rounded">
+          <button id="btnHablar" type="button" disabled class="touch-manipulation flex-1 bg-sky-600 hover:bg-sky-500 disabled:opacity-40 text-white text-xs font-bold py-1.5 rounded">
             🎙️ Hablar [F4]
           </button>
-          <button id="btnColgar" type="button" onclick="colgarLlamada()" disabled class="touch-manipulation bg-red-700 hover:bg-red-600 disabled:opacity-40 text-white text-xs font-bold px-2.5 py-1.5 rounded">
+          <button id="btnColgar" type="button" disabled class="touch-manipulation bg-red-700 hover:bg-red-600 disabled:opacity-40 text-white text-xs font-bold px-2.5 py-1.5 rounded">
             Colgar
           </button>
         </div>
@@ -252,7 +252,7 @@
         <div class="grid grid-cols-12 gap-1.5 mb-1.5">
           <div class="col-span-7">
             <label class="block text-[10px] text-slate-400 mb-0.5">Frecuencia / Grupo RESCAT</label>
-            <select id="frecuenciaRescat" onchange="cambiarFrecuenciaRescat()" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-[10px] font-mono text-emerald-300">
+            <select id="frecuenciaRescat" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-[10px] font-mono text-emerald-300">
               <option value="RESCAT-112-COORD | 380.125 MHz">RESCAT-112-COORD (380.125 MHz)</option>
               <option value="RESCAT-SEM-061 | 381.450 MHz">RESCAT-SEM-061 (381.450 MHz)</option>
               <option value="RESCAT-MOSSOS-REG | 382.800 MHz">RESCAT-MOSSOS-REG (382.800 MHz)</option>
@@ -267,10 +267,10 @@
         </div>
 
         <div class="flex gap-1.5 mb-1.5">
-          <button id="btnPtt" type="button" onclick="transmitirRadioRescat()" class="touch-manipulation flex-1 bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-1.5 rounded text-xs">
+          <button id="btnPtt" type="button" class="touch-manipulation flex-1 bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-1.5 rounded text-xs">
             📡 PTT · Emitir en RESCAT
           </button>
-          <button type="button" onclick="activarUnidadEnRescat()" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-600 text-emerald-300 font-bold px-2.5 py-1.5 rounded text-[11px]">
+          <button id="btnAsignarUnidad" type="button" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-600 text-emerald-300 font-bold px-2.5 py-1.5 rounded text-[11px]">
             + Asignar
           </button>
         </div>
@@ -285,13 +285,13 @@
         <div class="flex justify-between items-center mb-1">
           <span class="text-[11px] text-slate-400 font-semibold">Log Operativo:</span>
           <div class="flex gap-1">
-            <button type="button" onclick="guardarCerrarIncidente()" class="touch-manipulation bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-2 py-0.5 rounded text-[10px]">💾 Guardar</button>
-            <button type="button" onclick="abrirHistorial()" class="touch-manipulation bg-slate-700 hover:bg-slate-600 text-white font-bold px-2 py-0.5 rounded text-[10px]">📂 Archivo</button>
-            <button type="button" onclick="exportarHistorialJSON()" class="touch-manipulation bg-indigo-700 hover:bg-indigo-600 text-white font-bold px-2 py-0.5 rounded text-[10px]">⬇️ JSON</button>
+            <button id="btnGuardarExp" type="button" class="touch-manipulation bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-2 py-0.5 rounded text-[10px]">💾 Guardar</button>
+            <button id="btnAbrirArchivo" type="button" class="touch-manipulation bg-slate-700 hover:bg-slate-600 text-white font-bold px-2 py-0.5 rounded text-[10px]">📂 Archivo</button>
+            <button id="btnExportarJSON" type="button" class="touch-manipulation bg-indigo-700 hover:bg-indigo-600 text-white font-bold px-2 py-0.5 rounded text-[10px]">⬇️ JSON</button>
           </div>
         </div>
         <div id="logOperativo" class="flex-1 bg-slate-950 border border-slate-900 rounded p-2 text-[11px] font-mono text-emerald-400 overflow-y-auto space-y-0.5">
-          <div>[00:00] Consola CAT112 lista para guardia de 12h.</div>
+          <div>[00:00 · 00:00] Consola CAT112 iniciando...</div>
         </div>
       </div>
 
@@ -304,7 +304,7 @@
     <div class="bg-[#131c2e] border border-slate-700 rounded-lg max-w-2xl w-full max-h-[80vh] flex flex-col overflow-hidden">
       <div class="flex justify-between items-center px-4 py-2.5 border-b border-slate-800">
         <h3 class="text-sm font-bold text-sky-400">Archivo Local de Expedientes</h3>
-        <button type="button" onclick="cerrarHistorial()" class="text-slate-400 hover:text-white text-sm font-bold">✕</button>
+        <button id="btnCerrarArchivo" type="button" class="text-slate-400 hover:text-white text-sm font-bold">✕</button>
       </div>
       <div id="contenidoHistorial" class="p-4 overflow-y-auto space-y-2 text-xs"></div>
     </div>
