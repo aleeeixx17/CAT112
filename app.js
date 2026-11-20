@@ -274,14 +274,20 @@ function iniciarTickGuardia() {
   }, 1000);
 }
 
-function toggleGuardia12h() {
+function toggleGuardia12h(automatica = false) {
   if (!guardiaActiva) {
     guardiaActiva = true;
     if (segundosGuardia === 0) {
       proximoDisparoGuardia = INTERVALO_LLAMADA_SEG;
     }
-    log('GUARDIA DE 12H INICIADA. Llamadas automáticas cada 15 minutos.');
-    reproducirTono(780, 0.14, 'triangle');
+    log(
+      automatica
+        ? 'GUARDIA DE 12H INICIADA AUTOMÁTICAMENTE AL ENTRAR. Llamadas cada 15 minutos.'
+        : 'GUARDIA DE 12H INICIADA. Llamadas automáticas cada 15 minutos.'
+    );
+    if (!automatica) {
+      reproducirTono(780, 0.14, 'triangle');
+    }
     actualizarIndicadoresGuardia();
     iniciarTickGuardia();
   } else {
@@ -549,9 +555,4 @@ function generarRespuestaVoz(textoUsuario) {
     return `Protecció Civil anotada la incidencia en ${dir}, expediente ${exp}. Queda en seguimiento.`;
   }
 
-  return `Recibido en ${modoConversacion || 'central'} para el expediente ${exp} en ${dir}.`;
-}
-
-function activarMicrofono() {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition
+  return `Recibido en ${modoConversacion || 'central'} para el exped
