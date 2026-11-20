@@ -1,123 +1,115 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="overflow-x-hidden max-w-full">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0b101b">
   <title>CAT112 · CAD + Guardia 12h + Directorio CAT + Xarxa RESCAT</title>
-  <link rel="manifest" href="manifest.json">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="style.css">
 </head>
-<body class="min-h-screen lg:h-screen flex flex-col lg:overflow-hidden select-none bg-[#090d16] text-slate-100">
+<body class="min-h-screen lg:h-screen w-full max-w-full overflow-x-hidden flex flex-col lg:overflow-hidden select-none bg-[#090d16] text-slate-100">
 
   <!-- CABECERA OPERATIVA + GUARDIA DE 12 HORAS -->
-  <header class="bg-[#0b101b] border-b border-slate-800 px-3 py-1.5 flex flex-wrap justify-between items-center gap-2 text-xs">
-    <div class="flex items-center gap-2.5">
-      <div class="flex items-center gap-1.5 bg-red-600 text-white font-extrabold px-2.5 py-1 rounded tracking-wider">
+  <header class="w-full max-w-full bg-[#0b101b] border-b border-slate-800 px-2.5 py-1.5 flex flex-wrap justify-between items-center gap-1.5 text-xs">
+    <div class="flex items-center gap-2 min-w-0">
+      <div class="shrink-0 flex items-center gap-1 bg-red-600 text-white font-extrabold px-2 py-1 rounded tracking-wider">
         <span>CAT</span>
         <span class="bg-white text-red-600 px-1 rounded">112</span>
       </div>
-      <div class="hidden sm:flex flex-col leading-tight">
-        <span class="font-bold text-slate-200 tracking-wide">SALA OPERATIVA CATALUNYA · GUARDIA 12H</span>
-        <span class="text-[11px] text-slate-400">PUESTO: <strong class="text-sky-400">OP-112-04</strong> · PRÓX. LLAMADA: <strong id="proxLlamadaBadge" class="text-amber-400">--:--</strong></span>
+      <div class="hidden sm:flex flex-col leading-tight min-w-0">
+        <span class="font-bold text-slate-200 tracking-wide truncate">SALA OPERATIVA CATALUNYA · GUARDIA 12H</span>
+        <span class="text-[11px] text-slate-400 truncate">PUESTO: <strong class="text-sky-400">OP-112-04</strong> · PRÓX. LLAMADA: <strong id="proxLlamadaBadge" class="text-amber-400">--:--</strong></span>
       </div>
     </div>
 
-    <div class="flex flex-wrap items-center gap-1.5">
-      <button id="btnGuardia" type="button" class="touch-manipulation bg-amber-600 hover:bg-amber-500 text-white font-bold px-2.5 py-1 rounded shadow">
+    <div class="flex flex-wrap items-center gap-1.5 min-w-0">
+      <button id="btnGuardia" type="button" class="touch-manipulation bg-amber-600 hover:bg-amber-500 text-white font-bold px-2 py-1 rounded shadow text-[11px]">
         ⏸ Pausar Guardia
       </button>
 
-      <select id="velocidadGuardia" class="bg-slate-800 border border-slate-700 rounded px-1.5 py-1 text-[11px] text-sky-300 font-mono" title="Velocidad del reloj de guardia">
-        <option value="1">1x (Real)</option>
-        <option value="15" selected>15x (15m = 1m)</option>
-        <option value="60">60x (15m = 15s)</option>
+      <select id="velocidadGuardia" class="bg-slate-800 border border-slate-700 rounded px-1.5 py-1 text-[11px] text-sky-300 font-mono">
+        <option value="1">1x</option>
+        <option value="15" selected>15x</option>
+        <option value="60">60x</option>
       </select>
 
-      <div class="flex items-center gap-1 bg-slate-900 border border-slate-700 px-2 py-0.5 rounded" title="Tiempo transcurrido de la guardia de 12 horas">
+      <div class="flex items-center gap-1 bg-slate-900 border border-slate-700 px-2 py-0.5 rounded">
         <span class="text-[10px] uppercase text-slate-400">Guardia</span>
-        <span id="relojGuardia" class="font-mono text-xs font-bold text-emerald-400">00:00 / 12:00</span>
+        <span id="relojGuardia" class="font-mono text-[11px] font-bold text-emerald-400">00:00 / 12:00</span>
       </div>
 
-      <button id="btnSonido" type="button" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 px-2 py-1 rounded font-semibold">
+      <button id="btnSonido" type="button" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 px-2 py-1 rounded font-semibold text-[11px]">
         🔊 ON
       </button>
 
-      <select id="idiomaSelect" class="bg-slate-800 border border-slate-700 rounded px-1.5 py-1 text-slate-200 font-medium">
-        <option value="es-ES">Castellano</option>
-        <option value="ca-ES">Català</option>
+      <select id="idiomaSelect" class="bg-slate-800 border border-slate-700 rounded px-1.5 py-1 text-[11px] text-slate-200 font-medium">
+        <option value="es-ES">ES</option>
+        <option value="ca-ES">CA</option>
       </select>
 
-      <button id="btnSimularLlamada" type="button" class="touch-manipulation bg-sky-700 hover:bg-sky-600 text-white font-bold px-2.5 py-1 rounded">
-        📞 Forzar [F2]
+      <button id="btnSimularLlamada" type="button" class="touch-manipulation bg-sky-700 hover:bg-sky-600 text-white font-bold px-2 py-1 rounded text-[11px]">
+        📞 Llamada
       </button>
 
-      <div class="flex items-center gap-1 bg-slate-900 border border-slate-700 px-2 py-0.5 rounded" title="Duración de la llamada o atención actual">
+      <div class="flex items-center gap-1 bg-slate-900 border border-slate-700 px-2 py-0.5 rounded">
         <span class="text-[10px] uppercase text-slate-400">Atenc.</span>
-        <span id="cronometro" class="font-mono text-xs font-bold text-slate-100">00:00</span>
+        <span id="cronometro" class="font-mono text-[11px] font-bold text-slate-100">00:00</span>
       </div>
     </div>
   </header>
 
   <!-- ACCESO RÁPIDO GUARDIA 12H EN MÓVIL -->
-  <div class="md:hidden bg-[#0f172a] border-b border-slate-800 px-3 py-1.5 flex items-center justify-between gap-2 text-xs">
-    <div class="flex flex-col leading-tight">
-      <span class="text-[10px] uppercase text-slate-400">Turno 12h</span>
-      <span id="relojGuardiaMovil" class="font-mono font-bold text-emerald-400">00:00 / 12:00</span>
+  <div class="md:hidden w-full max-w-full bg-[#0f172a] border-b border-slate-800 px-2.5 py-1.5 flex items-center justify-between gap-2 text-xs">
+    <div class="flex items-center gap-2 min-w-0">
+      <span class="text-[10px] uppercase text-slate-400 shrink-0">Turno 12h</span>
+      <span id="relojGuardiaMovil" class="font-mono font-bold text-emerald-400 truncate">00:00 / 12:00</span>
     </div>
-    <button id="btnGuardiaMovil" type="button" class="touch-manipulation bg-amber-600 active:bg-amber-500 text-white font-bold px-3 py-1.5 rounded shadow text-xs">
+    <button id="btnGuardiaMovil" type="button" class="shrink-0 touch-manipulation bg-amber-600 active:bg-amber-500 text-white font-bold px-2.5 py-1 rounded shadow text-[11px]">
       ⏸ Pausar Guardia
     </button>
   </div>
 
   <!-- SUB-BARRA DE EXPEDIENTE Y COLA -->
-  <div class="bg-[#111827] border-b border-slate-800 px-3 py-1 flex flex-wrap justify-between items-center text-[11px] text-slate-400 gap-2">
-    <div class="flex flex-wrap items-center gap-3">
-      <span>EXPEDIENTE: <strong id="idIncidente" class="font-mono text-amber-400">SIN ASIGNAR</strong></span>
+  <div class="w-full max-w-full bg-[#111827] border-b border-slate-800 px-2.5 py-1 flex flex-wrap justify-between items-center text-[11px] text-slate-400 gap-1.5">
+    <div class="flex flex-wrap items-center gap-2 min-w-0">
+      <span>EXP: <strong id="idIncidente" class="font-mono text-amber-400">SIN ASIGNAR</strong></span>
       <span>LÍNEA: <strong id="lineaActivaBadge" class="text-sky-400">NINGUNA</strong></span>
-      <span>COLA 112: <strong id="colaLlamadasBadge" class="font-mono text-emerald-400">0</strong></span>
+      <span>COLA: <strong id="colaLlamadasBadge" class="font-mono text-emerald-400">0</strong></span>
       <button id="btnAtenderCola" type="button" class="touch-manipulation hidden bg-amber-600 hover:bg-amber-500 text-white font-bold px-2 py-0.5 rounded text-[10px]">
-        📲 Atender Llamada en Espera
+        📲 Atender Cola
       </button>
       <span id="badgeRiesgo" class="hidden px-2 py-0.5 rounded font-bold text-[10px] bg-red-950 text-red-300 border border-red-700">P1 · CRÍTICA</span>
-    </div>
-    <div class="hidden md:flex items-center gap-3 font-mono text-[10px] text-slate-500">
-      <span>[F2] Llamada</span>
-      <span>[F4] Hablar</span>
-      <span>[F8] Guardar</span>
-      <span>[ESC] Colgar</span>
     </div>
   </div>
 
   <!-- CUERPO PRINCIPAL DE 3 COLUMNAS -->
-  <main class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-2 p-2 lg:overflow-hidden">
+  <main class="flex-1 w-full max-w-full grid grid-cols-1 lg:grid-cols-12 gap-2 p-2 lg:overflow-hidden">
 
-    <!-- COLUMNA IZQUIERDA: CARTA DE LLAMADA (4 COLS) -->
-    <section class="lg:col-span-4 bg-[#131c2e] rounded border border-slate-800 p-2.5 flex flex-col gap-2 lg:overflow-y-auto">
+    <!-- COLUMNA IZQUIERDA: CARTA DE LLAMADA -->
+    <section class="min-w-0 lg:col-span-4 bg-[#131c2e] rounded border border-slate-800 p-2.5 flex flex-col gap-2 lg:overflow-y-auto">
       <div class="flex justify-between items-center border-b border-slate-800 pb-1">
         <span class="text-[11px] font-bold uppercase tracking-wider text-sky-400">1. Carta de Llamada (CAD)</span>
         <button id="btnLimpiarForm" type="button" class="touch-manipulation text-[11px] text-slate-400 hover:text-slate-200 underline">Limpiar</button>
       </div>
 
       <div class="grid grid-cols-2 gap-2">
-        <div>
+        <div class="min-w-0">
           <label class="block text-[11px] text-slate-400 mb-0.5">Teléfono Requirente</label>
-          <input id="telAlertante" type="text" readonly class="w-full bg-[#0b101b] border border-slate-700 rounded px-2 py-1 text-xs font-mono text-amber-400" placeholder="--- --- ---">
+          <input id="telAlertante" type="text" readonly class="w-full min-w-0 bg-[#0b101b] border border-slate-700 rounded px-2 py-1 text-xs font-mono text-amber-400" placeholder="--- --- ---">
         </div>
-        <div>
+        <div class="min-w-0">
           <label class="block text-[11px] text-slate-400 mb-0.5">Geolocalización AML</label>
-          <input id="amlStatus" type="text" readonly class="w-full bg-[#0b101b] border border-slate-700 rounded px-2 py-1 text-xs text-emerald-400" placeholder="Sin señal">
+          <input id="amlStatus" type="text" readonly class="w-full min-w-0 bg-[#0b101b] border border-slate-700 rounded px-2 py-1 text-xs text-emerald-400" placeholder="Sin señal">
         </div>
       </div>
 
-      <div>
+      <div class="min-w-0">
         <label class="block text-[11px] text-slate-400 mb-0.5">Ubicación / Vía / PK / Municipio</label>
-        <div class="flex gap-1">
-          <input id="direccion" type="text" class="flex-1 bg-[#0b101b] border border-slate-700 rounded px-2 py-1 text-xs text-slate-100" placeholder="Dirección o punto kilométrico">
-          <button id="btnValidarLoc" type="button" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-600 px-2 py-1 rounded text-[11px] text-sky-300 font-semibold">
+        <div class="flex gap-1 min-w-0">
+          <input id="direccion" type="text" class="flex-1 min-w-0 bg-[#0b101b] border border-slate-700 rounded px-2 py-1 text-xs text-slate-100" placeholder="Dirección o PK">
+          <button id="btnValidarLoc" type="button" class="shrink-0 touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-600 px-2 py-1 rounded text-[11px] text-sky-300 font-semibold">
             Validar
           </button>
         </div>
@@ -125,9 +117,9 @@
       </div>
 
       <div class="grid grid-cols-2 gap-2">
-        <div>
+        <div class="min-w-0">
           <label class="block text-[11px] text-slate-400 mb-0.5">Tipología</label>
-          <select id="tipologia" class="w-full bg-[#0b101b] border border-slate-700 rounded px-2 py-1 text-xs text-slate-100">
+          <select id="tipologia" class="w-full min-w-0 bg-[#0b101b] border border-slate-700 rounded px-2 py-1 text-xs text-slate-100">
             <option value="">-- Seleccionar --</option>
             <option value="SANITARIO">Sanitario / Emergencia Médica</option>
             <option value="TRAFICO">Tráfico / Accidente Viario</option>
@@ -136,9 +128,9 @@
             <option value="PROT_CIVIL">Protección Civil</option>
           </select>
         </div>
-        <div>
+        <div class="min-w-0">
           <label class="block text-[11px] text-slate-400 mb-0.5">Prioridad</label>
-          <select id="prioridad" class="w-full bg-[#0b101b] border border-slate-700 rounded px-2 py-1 text-xs text-slate-100">
+          <select id="prioridad" class="w-full min-w-0 bg-[#0b101b] border border-slate-700 rounded px-2 py-1 text-xs text-slate-100">
             <option value="ALTA">P1 · Crítica</option>
             <option value="MEDIA">P2 · Urgente</option>
             <option value="BAJA">P3 · Leve</option>
@@ -146,32 +138,32 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-3 gap-1.5 bg-[#0b101b] p-2 rounded border border-slate-800 text-[11px]">
-        <label class="flex items-center gap-1.5 cursor-pointer">
-          <input id="chkAfectados" type="checkbox" class="accent-red-500">
-          <span>Afectados</span>
+      <div class="grid grid-cols-3 gap-1 bg-[#0b101b] p-2 rounded border border-slate-800 text-[11px]">
+        <label class="flex items-center gap-1 cursor-pointer min-w-0">
+          <input id="chkAfectados" type="checkbox" class="accent-red-500 shrink-0">
+          <span class="truncate">Afectados</span>
         </label>
-        <label class="flex items-center gap-1.5 cursor-pointer">
-          <input id="chkRiesgoSec" type="checkbox" class="accent-amber-500">
-          <span>Riesgo sec.</span>
+        <label class="flex items-center gap-1 cursor-pointer min-w-0">
+          <input id="chkRiesgoSec" type="checkbox" class="accent-amber-500 shrink-0">
+          <span class="truncate">Riesgo sec.</span>
         </label>
-        <label class="flex items-center gap-1.5 cursor-pointer">
-          <input id="chkIpaDada" type="checkbox" class="accent-emerald-500">
-          <span>IPA dada</span>
+        <label class="flex items-center gap-1 cursor-pointer min-w-0">
+          <input id="chkIpaDada" type="checkbox" class="accent-emerald-500 shrink-0">
+          <span class="truncate">IPA dada</span>
         </label>
       </div>
 
-      <div class="flex-1 flex flex-col min-h-[100px]">
-        <label class="block text-[11px] text-slate-400 mb-0.5">Relato, Constantes y Cálculos (XABCDE / Glasgow / NEWS2 / PAM / PP)</label>
-        <textarea id="relato" class="w-full flex-1 bg-[#0b101b] border border-slate-700 rounded p-2 text-xs text-slate-100 resize-none" placeholder="Anota valoración XABCDE, Glasgow, AVDI, NEWS2, PAM, PP y avisos dados..."></textarea>
+      <div class="flex-1 flex flex-col min-h-[100px] min-w-0">
+        <label class="block text-[11px] text-slate-400 mb-0.5">Relato, Constantes y Cálculos</label>
+        <textarea id="relato" class="w-full min-w-0 flex-1 bg-[#0b101b] border border-slate-700 rounded p-2 text-xs text-slate-100 resize-none" placeholder="Anota XABCDE, Glasgow, AVDI, NEWS2, PAM, PP..."></textarea>
       </div>
     </section>
 
-    <!-- COLUMNA CENTRAL: MAPA GIS (4 COLS) -->
-    <section class="lg:col-span-4 bg-[#131c2e] rounded border border-slate-800 p-2 flex flex-col min-h-[280px]">
-      <div class="flex justify-between items-center mb-1.5 px-1 gap-1">
-        <span class="text-[11px] font-bold uppercase tracking-wider text-sky-400">2. Cartografía GIS</span>
-        <div class="flex items-center gap-1">
+    <!-- COLUMNA CENTRAL: MAPA GIS -->
+    <section class="min-w-0 lg:col-span-4 bg-[#131c2e] rounded border border-slate-800 p-2 flex flex-col min-h-[260px]">
+      <div class="flex justify-between items-center mb-1.5 px-1 gap-1 min-w-0">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-sky-400 truncate">2. Cartografía GIS</span>
+        <div class="flex items-center gap-1 shrink-0">
           <button id="btnCapaMapa" type="button" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-700 px-2 py-0.5 rounded text-[10px] text-slate-300">
             🗺️ Capa
           </button>
@@ -181,20 +173,18 @@
           <span id="coordsText" class="text-[10px] font-mono text-slate-400">41.6894, 2.4922</span>
         </div>
       </div>
-      <div id="map" class="flex-1 min-h-[220px] rounded"></div>
+      <div id="map" class="flex-1 min-h-[210px] rounded w-full"></div>
     </section>
 
-    <!-- COLUMNA DERECHA: CENTRALITA CAPs + DIRECTORIO CAT + XARXA RESCAT (4 COLS) -->
-    <section class="lg:col-span-4 bg-[#131c2e] rounded border border-slate-800 p-2.5 flex flex-col gap-2 lg:overflow-y-auto">
-
-      <!-- CENTRALITA TELEFÓNICA CAPs + DIRECTORIO CATALUNYA -->
-      <div class="bg-[#0b101b] p-2 rounded border border-slate-800">
-        <div class="flex justify-between items-center mb-1.5">
-          <span class="text-[11px] font-bold uppercase tracking-wider text-amber-400">3. Centralita CAPs, Hospitales y Bases</span>
-          <span id="estadoLlamada" class="text-[10px] font-bold text-slate-400">EN REPOSO</span>
+    <!-- COLUMNA DERECHA: CENTRALITA + RESCAT + LOG -->
+    <section class="min-w-0 lg:col-span-4 bg-[#131c2e] rounded border border-slate-800 p-2.5 flex flex-col gap-2 lg:overflow-y-auto">
+      <div class="bg-[#0b101b] p-2 rounded border border-slate-800 min-w-0">
+        <div class="flex justify-between items-center mb-1.5 gap-1">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-amber-400 truncate">3. Centralita y Directorio</span>
+          <span id="estadoLlamada" class="text-[10px] font-bold text-slate-400 shrink-0">EN REPOSO</span>
         </div>
 
-        <div class="grid grid-cols-3 gap-1 mb-1.5 text-[10px]">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1 mb-1.5 text-[10px]">
           <button type="button" data-cap="CAP de Sala" class="btn-cap touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold py-1 px-1.5 rounded truncate">
             📞 CAP Sala
           </button>
@@ -212,18 +202,17 @@
           </button>
         </div>
 
-        <div class="grid grid-cols-12 gap-1 mb-1.5">
-          <select id="categoriaDirectorio" class="col-span-5 bg-slate-950 border border-slate-700 rounded px-1.5 py-1 text-[10px] text-sky-300 font-semibold">
-            <option value="HOSPITALES">🏥 Hospitales CAT</option>
-            <option value="MOSSOS">🚓 Comisarías Mossos</option>
-            <option value="BOMBERS">🚒 Bases Bombers</option>
-            <option value="PROTECCIO_CIVIL">🦺 Protecció Civil</option>
+        <div class="grid grid-cols-12 gap-1 mb-1.5 min-w-0">
+          <select id="categoriaDirectorio" class="col-span-5 min-w-0 bg-slate-950 border border-slate-700 rounded px-1 py-1 text-[10px] text-sky-300 font-semibold">
+            <option value="HOSPITALES">🏥 Hospitales</option>
+            <option value="MOSSOS">🚓 Mossos</option>
+            <option value="BOMBERS">🚒 Bombers</option>
+            <option value="PROTECCIO_CIVIL">🦺 P. Civil</option>
           </select>
 
-          <select id="centroDirectorio" class="col-span-5 bg-slate-950 border border-slate-700 rounded px-1.5 py-1 text-[10px] text-slate-200 truncate">
-          </select>
+          <select id="centroDirectorio" class="col-span-5 min-w-0 bg-slate-950 border border-slate-700 rounded px-1 py-1 text-[10px] text-slate-200"></select>
 
-          <button id="btnLlamarCentro" type="button" class="touch-manipulation col-span-2 bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-1 rounded text-[10px]" title="Llamar y ubicar en mapa">
+          <button id="btnLlamarCentro" type="button" class="col-span-2 touch-manipulation bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-1 rounded text-[10px]">
             Llamar
           </button>
         </div>
@@ -234,7 +223,7 @@
 
         <div class="flex gap-1.5">
           <button id="btnHablar" type="button" disabled class="touch-manipulation flex-1 bg-sky-600 hover:bg-sky-500 disabled:opacity-40 text-white text-xs font-bold py-1.5 rounded">
-            🎙️ Hablar [F4]
+            🎙️ Hablar
           </button>
           <button id="btnColgar" type="button" disabled class="touch-manipulation bg-red-700 hover:bg-red-600 disabled:opacity-40 text-white text-xs font-bold px-2.5 py-1.5 rounded">
             Colgar
@@ -242,33 +231,30 @@
         </div>
       </div>
 
-      <!-- EMISORA XARXA RESCAT (TETRA) -->
-      <div class="bg-[#0b101b] p-2 rounded border border-emerald-900/60">
+      <div class="bg-[#0b101b] p-2 rounded border border-emerald-900/60 min-w-0">
         <div class="flex justify-between items-center mb-1.5">
-          <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">4. Emisora Xarxa RESCAT</span>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">4. Emisora RESCAT</span>
           <span id="pttBadge" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-700">RX / STAND-BY</span>
         </div>
 
-        <div class="grid grid-cols-12 gap-1.5 mb-1.5">
-          <div class="col-span-7">
-            <label class="block text-[10px] text-slate-400 mb-0.5">Frecuencia / Grupo RESCAT</label>
-            <select id="frecuenciaRescat" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-[10px] font-mono text-emerald-300">
-              <option value="RESCAT-112-COORD | 380.125 MHz">RESCAT-112-COORD (380.125 MHz)</option>
-              <option value="RESCAT-SEM-061 | 381.450 MHz">RESCAT-SEM-061 (381.450 MHz)</option>
-              <option value="RESCAT-MOSSOS-REG | 382.800 MHz">RESCAT-MOSSOS-REG (382.800 MHz)</option>
-              <option value="RESCAT-BOMBERS-INC | 384.225 MHz">RESCAT-BOMBERS-INC (384.225 MHz)</option>
-              <option value="RESCAT-PC-CECAT | 385.600 MHz">RESCAT-PC-CECAT (385.600 MHz)</option>
+        <div class="grid grid-cols-12 gap-1.5 mb-1.5 min-w-0">
+          <div class="col-span-7 min-w-0">
+            <select id="frecuenciaRescat" class="w-full min-w-0 bg-slate-950 border border-slate-700 rounded px-1.5 py-1 text-[10px] font-mono text-emerald-300">
+              <option value="RESCAT-112-COORD | 380.125 MHz">RESCAT-112 (380.125)</option>
+              <option value="RESCAT-SEM-061 | 381.450 MHz">RESCAT-061 (381.450)</option>
+              <option value="RESCAT-MOSSOS-REG | 382.800 MHz">RESCAT-MOSSOS (382.800)</option>
+              <option value="RESCAT-BOMBERS-INC | 384.225 MHz">RESCAT-BOMBERS (384.225)</option>
+              <option value="RESCAT-PC-CECAT | 385.600 MHz">RESCAT-PC (385.600)</option>
             </select>
           </div>
-          <div class="col-span-5">
-            <label class="block text-[10px] text-slate-400 mb-0.5">Indicativo Unidad</label>
-            <input id="indicativoUnidad" type="text" value="SVB-402" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-[10px] font-mono text-amber-300">
+          <div class="col-span-5 min-w-0">
+            <input id="indicativoUnidad" type="text" value="SVB-402" class="w-full min-w-0 bg-slate-950 border border-slate-700 rounded px-1.5 py-1 text-[10px] font-mono text-amber-300">
           </div>
         </div>
 
         <div class="flex gap-1.5 mb-1.5">
           <button id="btnPtt" type="button" class="touch-manipulation flex-1 bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-1.5 rounded text-xs">
-            📡 PTT · Emitir en RESCAT
+            📡 PTT · Emitir
           </button>
           <button id="btnAsignarUnidad" type="button" class="touch-manipulation bg-slate-800 hover:bg-slate-700 border border-slate-600 text-emerald-300 font-bold px-2.5 py-1.5 rounded text-[11px]">
             + Asignar
@@ -280,26 +266,20 @@
         </div>
       </div>
 
-      <!-- CRONOLOGÍA Y GUARDADO -->
-      <div class="flex-1 flex flex-col min-h-[70px]">
-        <div class="flex justify-between items-center mb-1">
+      <div class="flex-1 flex flex-col min-h-[70px] min-w-0">
+        <div class="flex justify-between items-center mb-1 gap-1">
           <span class="text-[11px] text-slate-400 font-semibold">Log Operativo:</span>
-          <div class="flex gap-1">
+          <div class="flex gap-1 shrink-0">
             <button id="btnGuardarExp" type="button" class="touch-manipulation bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-2 py-0.5 rounded text-[10px]">💾 Guardar</button>
             <button id="btnAbrirArchivo" type="button" class="touch-manipulation bg-slate-700 hover:bg-slate-600 text-white font-bold px-2 py-0.5 rounded text-[10px]">📂 Archivo</button>
             <button id="btnExportarJSON" type="button" class="touch-manipulation bg-indigo-700 hover:bg-indigo-600 text-white font-bold px-2 py-0.5 rounded text-[10px]">⬇️ JSON</button>
           </div>
         </div>
-        <div id="logOperativo" class="flex-1 bg-slate-950 border border-slate-900 rounded p-2 text-[11px] font-mono text-emerald-400 overflow-y-auto space-y-0.5">
-          <div>[00:00 · 00:00] Consola CAT112 iniciando...</div>
-        </div>
+        <div id="logOperativo" class="flex-1 bg-slate-950 border border-slate-900 rounded p-2 text-[11px] font-mono text-emerald-400 overflow-y-auto space-y-0.5"></div>
       </div>
-
     </section>
-
   </main>
 
-  <!-- MODAL ARCHIVO -->
   <div id="modalHistorial" class="hidden fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4">
     <div class="bg-[#131c2e] border border-slate-700 rounded-lg max-w-2xl w-full max-h-[80vh] flex flex-col overflow-hidden">
       <div class="flex justify-between items-center px-4 py-2.5 border-b border-slate-800">
@@ -310,15 +290,44 @@
     </div>
   </div>
 
-  <script src="directorio_cat.js"></script>
-  <script src="scenarios.js"></script>
-  <script src="app.js"></script>
   <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
-      });
-    }
-  </script>
-</body>
-</html>
+    (function () {
+      const ESCENARIOS = [
+        {
+          id: "EXP-2026-0112",
+          telefono: "644 218 903",
+          aml: "AML Precisión ~12 m · GPS Activo",
+          coords: [41.6894, 2.4922],
+          radioMetros: 15,
+          direccionSugerida: "Av. del Montseny, 48, Sant Celoni",
+          tipologia: "SANITARIO",
+          prioridad: "ALTA",
+          saludoInicial: "¡Por favor, ayuda! Un hombre de unos 62 años se ha desplomado en la acera y cuesta que reaccione.",
+          respuestas: {
+            respira: "Respira de forma entrecortada y con ruidos raros.",
+            consciente: "Apenas abre los ojos al hablarle fuerte.",
+            donde: "Estamos en Av. del Montseny 48, Sant Celoni.",
+            constantes: "No tengo aparatos de medición, está pálido y sudoroso.",
+            sangrado: "No tiene heridas sangrantes visibles.",
+            rcp: "Vale, pongo las manos en el centro del pecho y sigo el ritmo.",
+            defecto: "Estoy aquí con él en Sant Celoni, dime qué hacer."
+          }
+        },
+        {
+          id: "EXP-2026-0113",
+          telefono: "689 504 117",
+          aml: "AML Precisión ~25 m · Red + GPS",
+          coords: [41.6961, 2.4558],
+          radioMetros: 25,
+          direccionSugerida: "Carrer Major, 14, Santa Maria de Palautordera",
+          tipologia: "SANITARIO",
+          prioridad: "ALTA",
+          saludoInicial: "Hola, mi madre tiene un dolor muy fuerte en el centro del pecho y falta de aire.",
+          respuestas: {
+            respira: "Respira rápido y dice que le cuesta coger aire.",
+            consciente: "Está consciente y orientada, pero asustada.",
+            donde: "En Santa Maria de Palautordera, Carrer Major 14.",
+            constantes: "Sin aparatos en casa, piel fría y sudorosa.",
+            sangrado: "Sin sangrados.",
+            rcp: "De acuerdo, la mantengo sentada y tranquila.",
+            defecto: "Sigue con el dolo
