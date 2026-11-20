@@ -27,8 +27,8 @@
     </div>
 
     <div class="flex flex-wrap items-center gap-1.5">
-      <button id="btnGuardia" type="button" class="touch-manipulation bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-2.5 py-1 rounded shadow">
-        ▶ Iniciar Guardia 12h
+      <button id="btnGuardia" type="button" class="touch-manipulation bg-amber-600 hover:bg-amber-500 text-white font-bold px-2.5 py-1 rounded shadow">
+        ⏸ Pausar Guardia
       </button>
 
       <select id="velocidadGuardia" onchange="actualizarVelocidadGuardia()" class="bg-slate-800 border border-slate-700 rounded px-1.5 py-1 text-[11px] text-sky-300 font-mono" title="Velocidad del reloj de guardia">
@@ -68,8 +68,8 @@
       <span class="text-[10px] uppercase text-slate-400">Turno 12h</span>
       <span id="relojGuardiaMovil" class="font-mono font-bold text-emerald-400">00:00 / 12:00</span>
     </div>
-    <button id="btnGuardiaMovil" type="button" class="touch-manipulation bg-emerald-600 active:bg-emerald-500 text-white font-bold px-3 py-1.5 rounded shadow text-xs">
-      ▶ Iniciar Guardia 12h
+    <button id="btnGuardiaMovil" type="button" class="touch-manipulation bg-amber-600 active:bg-amber-500 text-white font-bold px-3 py-1.5 rounded shadow text-xs">
+      ⏸ Pausar Guardia
     </button>
   </div>
 
@@ -229,7 +229,7 @@
         </div>
 
         <div id="chatLog" class="h-20 overflow-y-auto text-xs space-y-1 mb-1.5 p-1.5 bg-slate-950 rounded border border-slate-900">
-          <p class="text-slate-500 italic text-[11px]">Inicia la guardia de 12h o fuerza una llamada 112 para hablar por voz.</p>
+          <p class="text-slate-500 italic text-[11px]">Iniciando guardia de 12h y llamada inicial...</p>
         </div>
 
         <div class="flex gap-1.5">
