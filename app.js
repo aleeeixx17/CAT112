@@ -1,14 +1,19 @@
-// Inicialización del mapa Leaflet
-const map = L.map('map').setView([41.6894, 2.4922], 12);
-
-const capaOSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap'
-});
-const capaTopo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenTopoMap'
-});
-capaOSM.addTo(map);
+// Inicialización segura del mapa Leaflet
+let map = null;
+let capaOSM = null;
+let capaTopo = null;
 let capaActual = 'osm';
+
+if (typeof L !== 'undefined' && document.getElementById('map')) {
+  map = L.map('map').setView([41.6894, 2.4922], 12);
+  capaOSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  });
+  capaTopo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenTopoMap'
+  });
+  capaOSM.addTo(map);
+}
 
 let marcador = null;
 let circuloPrecision = null;
@@ -48,18 +53,20 @@ function reproducirTono(frecuencia = 740, duracion = 0.14, tipo = 'sine') {
   const AudioCtx = window.AudioContext || window.webkitAudioContext;
   if (!AudioCtx) return;
 
-  const ctx = new AudioCtx();
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  osc.type = tipo;
-  osc.frequency.setValueAtTime(frecuencia, ctx.currentTime);
-  gain.gain.setValueAtTime(0.08, ctx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duracion);
+  try {
+    const ctx = new AudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = tipo;
+    osc.frequency.setValueAtTime(frecuencia, ctx.currentTime);
+    gain.gain.setValueAtTime(0.08, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duracion);
 
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-  osc.start();
-  osc.stop(ctx.currentTime + duracion);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + duracion);
+  } catch (_) {}
 }
 
 function tonoRadio(apertura = true) {
@@ -91,6 +98,7 @@ function formatoHorasMinutos(totalSeg) {
 
 function log(mensaje) {
   const div = document.getElementById('logOperativo');
+  if (!div) return;
   div.innerHTML += `<div><span class="text-slate-500">[${formatoCrono(segundos)}]</span> ${mensaje}</div>`;
   div.scrollTop = div.scrollHeight;
 }
@@ -124,6 +132,7 @@ function validarLocalizacionManual() {
 }
 
 function cambiarCapaMapa() {
+  if (!map) return;
   if (capaActual === 'osm') {
     map.removeLayer(capaOSM);
     capaTopo.addTo(map);
@@ -136,7 +145,7 @@ function cambiarCapaMapa() {
 }
 
 function centrarEnIncidente() {
-  if (!escenarioActual) return;
+  if (!map || !escenarioActual) return;
   map.setView(escenarioActual.coords, 15);
 }
 
@@ -168,37 +177,66 @@ function iniciarCronometroSiNoActivo() {
   }, 1000);
 }
 
-// GUARDIA DE 12 HORAS
+// GUARDIA DE 12 HORAS (ESCRITORIO + MÓVIL)
+function sincronizarBotonesGuardia() {
+  const textoBtn = guardiaActiva ? '⏸ Pausar Guardia' : '▶ Iniciar Guardia 12h';
+
+  const btnDesk = document.getElementById('btnGuardia');
+  if (btnDesk) {
+    btnDesk.innerText = textoBtn;
+    btnDesk.className = guardiaActiva
+      ? 'bg-amber-600 hover:bg-amber-500 text-white font-bold px-2.5 py-1 rounded shadow'
+      : 'bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-2.5 py-1 rounded shadow';
+  }
+
+  const btnMovil = document.getElementById('btnGuardiaMovil');
+  if (btnMovil) {
+    btnMovil.innerText = textoBtn;
+    btnMovil.className = guardiaActiva
+      ? 'bg-amber-600 active:bg-amber-500 text-white font-bold px-3 py-1.5 rounded shadow text-xs'
+      : 'bg-emerald-600 active:bg-emerald-500 text-white font-bold px-3 py-1.5 rounded shadow text-xs';
+  }
+
+  const relojMovil = document.getElementById('relojGuardiaMovil');
+  if (relojMovil) {
+    relojMovil.innerText = `${formatoHorasMinutos(segundosGuardia)} / 12:00`;
+  }
+}
+
 function actualizarVelocidadGuardia() {
-  velocidadGuardia = parseInt(document.getElementById('velocidadGuardia').value, 10) || 15;
+  const sel = document.getElementById('velocidadGuardia');
+  velocidadGuardia = sel ? (parseInt(sel.value, 10) || 15) : 15;
   log(`Velocidad de guardia: ${velocidadGuardia}x.`);
 }
 
 function actualizarIndicadoresGuardia() {
-  document.getElementById('relojGuardia').innerText =
-    `${formatoHorasMinutos(segundosGuardia)} / 12:00`;
-
-  const faltan = Math.max(0, proximoDisparoGuardia - segundosGuardia);
-  document.getElementById('proxLlamadaBadge').innerText =
-    guardiaActiva ? `+${formatoHorasMinutos(faltan)}` : '--:--';
-
-  document.getElementById('colaLlamadasBadge').innerText = String(colaLlamadas.length);
-  const btnCola = document.getElementById('btnAtenderCola');
-  if (colaLlamadas.length > 0) {
-    btnCola.classList.remove('hidden');
-  } else {
-    btnCola.classList.add('hidden');
+  const relojEl = document.getElementById('relojGuardia');
+  if (relojEl) {
+    relojEl.innerText = `${formatoHorasMinutos(segundosGuardia)} / 12:00`;
   }
+
+  const proxEl = document.getElementById('proxLlamadaBadge');
+  if (proxEl) {
+    const faltan = Math.max(0, proximoDisparoGuardia - segundosGuardia);
+    proxEl.innerText = guardiaActiva ? `+${formatoHorasMinutos(faltan)}` : '--:--';
+  }
+
+  const colaEl = document.getElementById('colaLlamadasBadge');
+  if (colaEl) {
+    colaEl.innerText = String(colaLlamadas.length);
+  }
+
+  const btnCola = document.getElementById('btnAtenderCola');
+  if (btnCola) {
+    btnCola.classList.toggle('hidden', colaLlamadas.length === 0);
+  }
+
+  sincronizarBotonesGuardia();
 }
 
 function toggleGuardia12h() {
-  const btn = document.getElementById('btnGuardia');
-
   if (!guardiaActiva) {
     guardiaActiva = true;
-    btn.innerText = '⏸ Pausar Guardia';
-    btn.className = 'bg-amber-600 hover:bg-amber-500 text-white font-bold px-2.5 py-1 rounded shadow';
-
     if (segundosGuardia === 0) {
       proximoDisparoGuardia = INTERVALO_LLAMADA_SEG;
       log('GUARDIA DE 12H INICIADA. Llamadas automáticas cada 15 minutos.');
@@ -231,8 +269,6 @@ function toggleGuardia12h() {
     guardiaActiva = false;
     clearInterval(intervaloGuardiaTick);
     intervaloGuardiaTick = null;
-    btn.innerText = '▶ Reanudar Guardia';
-    btn.className = 'bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-2.5 py-1 rounded shadow';
     log(`GUARDIA PAUSADA en ${formatoHorasMinutos(segundosGuardia)}.`);
     actualizarIndicadoresGuardia();
   }
@@ -242,9 +278,6 @@ function finalizarGuardia12h() {
   guardiaActiva = false;
   clearInterval(intervaloGuardiaTick);
   intervaloGuardiaTick = null;
-  const btn = document.getElementById('btnGuardia');
-  btn.innerText = '▶ Iniciar Guardia 12h';
-  btn.className = 'bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-2.5 py-1 rounded shadow';
   reproducirTono(520, 0.25, 'sine');
   log('FIN DE LA GUARDIA DE 12 HORAS (12:00).');
   actualizarIndicadoresGuardia();
@@ -305,24 +338,26 @@ function cargarLlamadaEnConsola(esc) {
   actualizarBadgeRiesgo();
 
   const [lat, lng] = esc.coords;
-  map.setView([lat, lng], 15);
-  if (marcador) map.removeLayer(marcador);
-  if (circuloPrecision) map.removeLayer(circuloPrecision);
+  if (map) {
+    map.setView([lat, lng], 15);
+    if (marcador) map.removeLayer(marcador);
+    if (circuloPrecision) map.removeLayer(circuloPrecision);
 
-  circuloPrecision = L.circle([lat, lng], {
-    radius: esc.radioMetros || 25,
-    color: '#38bdf8',
-    fillColor: '#38bdf8',
-    fillOpacity: 0.15,
-    weight: 1.5
-  }).addTo(map);
+    circuloPrecision = L.circle([lat, lng], {
+      radius: esc.radioMetros || 25,
+      color: '#38bdf8',
+      fillColor: '#38bdf8',
+      fillOpacity: 0.15,
+      weight: 1.5
+    }).addTo(map);
 
-  marcador = L.circleMarker([lat, lng], {
-    color: '#ef4444',
-    fillColor: '#ef4444',
-    fillOpacity: 0.75,
-    radius: 9
-  }).addTo(map).bindPopup(`<b>${esc.id}</b><br>${esc.aml}`).openPopup();
+    marcador = L.circleMarker([lat, lng], {
+      color: '#ef4444',
+      fillColor: '#ef4444',
+      fillOpacity: 0.75,
+      radius: 9
+    }).addTo(map).bindPopup(`<b>${esc.id}</b><br>${esc.aml}`).openPopup();
+  }
 
   document.getElementById('coordsText').innerText = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
 
@@ -391,14 +426,16 @@ function llamarCentroSeleccionado() {
 
   if (Array.isArray(centro.coords) && centro.coords.length === 2) {
     const [lat, lng] = centro.coords;
-    map.setView([lat, lng], 15);
-    if (marcadorCentro) map.removeLayer(marcadorCentro);
-    marcadorCentro = L.circleMarker([lat, lng], {
-      color: '#38bdf8',
-      fillColor: '#0284c7',
-      fillOpacity: 0.85,
-      radius: 8
-    }).addTo(map).bindPopup(`<b>${centro.nombre}</b>`).openPopup();
+    if (map) {
+      map.setView([lat, lng], 15);
+      if (marcadorCentro) map.removeLayer(marcadorCentro);
+      marcadorCentro = L.circleMarker([lat, lng], {
+        color: '#38bdf8',
+        fillColor: '#0284c7',
+        fillOpacity: 0.85,
+        radius: 8
+      }).addTo(map).bindPopup(`<b>${centro.nombre}</b>`).openPopup();
+    }
     document.getElementById('coordsText').innerText = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
   }
 
@@ -511,23 +548,4 @@ function cambiarFrecuenciaRescat() {
 }
 
 function transmitirRadioRescat() {
-  const freq = document.getElementById('frecuenciaRescat').value;
-  const indicativo = document.getElementById('indicativoUnidad').value.trim() || 'UNIDAD';
-  const pttBadge = document.getElementById('pttBadge');
-  const btnPtt = document.getElementById('btnPtt');
-
-  tonoRadio(true);
-  pttBadge.innerText = 'TX · EMITIENDO';
-  pttBadge.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-red-950 text-red-300 border border-red-700 blink';
-  btnPtt.innerText = '🛑 Habla por radio...';
-
-  const responderPorRadio = (locucion) => {
-    log(`RESCAT [${freq}] TX OP-112-04 -> ${indicativo}: "${locucion}"`);
-    setTimeout(() => {
-      tonoRadio(false);
-      pttBadge.innerText = 'RX / STAND-BY';
-      pttBadge.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-700';
-      btnPtt.innerText = '📡 PTT · Emitir en RESCAT';
-
-      const msgUnidad = `Rebut 112, ${indicativo} copiat i en marxa.`;
-      log(`RESCAT [${freq}] RX ${indica
+  const freq = document.getElementById('frecuenciaRes
