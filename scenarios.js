@@ -1,4 +1,4 @@
-const ESCENARIOS_112 = [
+window.ESCENARIOS_112 = [
   {
     id: "EXP-2026-0112",
     telefono: "644 218 903",
@@ -28,14 +28,14 @@ const ESCENARIOS_112 = [
     direccionSugerida: "Carrer Major, 14, Santa Maria de Palautordera",
     tipologia: "SANITARIO",
     prioridad: "ALTA",
-    saludoInicial: "Hola, mi madre tiene un dolor muy fuerte en el centro del pecho que se le va hacia el brazo izquierdo y falta de aire.",
+    saludoInicial: "Hola, mi madre tiene un dolor muy fuerte en el centro del pecho y falta de aire.",
     respuestas: {
       respira: "Respira rápido y dice que le cuesta coger aire, está sentada en una silla.",
-      consciente: "Está consciente y orientada, aunque muy asustada y con náuseas.",
+      consciente: "Está consciente y orientada, aunque muy asustada.",
       donde: "En Santa Maria de Palautordera, calle Major 14, primer piso.",
-      constantes: "No tenemos aparatos en casa, solo notamos la piel fría y pegajosa.",
+      constantes: "No tenemos aparatos en casa, solo notamos la piel fría y sudorosa.",
       sangrado: "No sangra por ningún lado.",
-      rcp: "De acuerdo, la mantengo sentada y sin darle nada de beber hasta que llegue la ambulancia.",
+      rcp: "De acuerdo, la mantengo sentada y tranquila hasta que llegue la ambulancia.",
       defecto: "Sigue con el dolor en el pecho aquí en la calle Major."
     }
   },
@@ -45,18 +45,18 @@ const ESCENARIOS_112 = [
     aml: "AML Precisión ~20 m · AP-7 PK 112",
     coords: [41.6782, 2.4885],
     radioMetros: 20,
-    direccionSugerida: "AP-7 PK 112, sentido Girona, término Sant Celoni",
+    direccionSugerida: "AP-7 PK 112, sentido Girona, Sant Celoni",
     tipologia: "TRAFICO",
     prioridad: "ALTA",
-    saludoInicial: "¡Ha habido un choque entre dos turismos en la AP-7! Hay humo en el capó de uno de los coches y una persona que no sale.",
+    saludoInicial: "¡Ha habido un choque entre dos turismos en la AP-7! Hay humo en un coche y una persona que no sale.",
     respuestas: {
       respira: "La persona del coche delantero respira, pero se queja mucho del pecho.",
       consciente: "Está consciente pero aturdida, responde con frases cortas.",
-      donde: "En la autopista AP-7, punto kilométrico 112 sentido Girona, en el carril derecho.",
-      constantes: "No puedo medir constantes, estamos en el arcén apartados del tráfico.",
+      donde: "En la autopista AP-7, punto kilométrico 112 sentido Girona.",
+      constantes: "No puedo medir constantes, estamos apartados en el arcén.",
       sangrado: "Tiene un corte en la frente que sangra un poco.",
-      rcp: "Entendido, no intentamos moverla del coche y avisamos a los demás para que no se acerquen.",
-      defecto: "Seguimos en el PK 112 de la AP-7, se ve humo blanco del motor."
+      rcp: "Entendido, no la movemos del coche y avisamos a los demás.",
+      defecto: "Seguimos en el PK 112 de la AP-7, se ve humo del motor."
     }
   },
   {
@@ -68,55 +68,15 @@ const ESCENARIOS_112 = [
     direccionSugerida: "Passeig de la Vall d'Hebron, 119, Barcelona",
     tipologia: "INCENDIO",
     prioridad: "ALTA",
-    saludoInicial: "Emergencias, está saliendo mucho humo negro por la ventana de un tercer piso y suena la alarma de incendios.",
+    saludoInicial: "Emergencias, está saliendo humo negro por la ventana de un tercer piso y suena la alarma.",
     respuestas: {
-      respira: "En el rellano huele fuerte a humo, los vecinos están bajando por las escaleras.",
-      consciente: "Por ahora todos los que bajan están conscientes, pero hay una persona mayor en el segundo.",
+      respira: "En el rellano huele fuerte a humo, los vecinos están bajando.",
+      consciente: "Los que bajan están conscientes, pero hay una persona mayor en el segundo.",
       donde: "Passeig de la Vall d'Hebron 119, en Barcelona.",
       constantes: "No tenemos mediciones, hay bastante humo en la escalera.",
       sangrado: "Nadie sangra por el momento.",
       rcp: "De acuerdo, no usamos el ascensor y bajamos con cuidado.",
       defecto: "El humo sigue saliendo por la ventana del tercer piso."
-    }
-  },
-  {
-    id: "EXP-2026-0116",
-    telefono: "671 334 908",
-    aml: "AML Precisión ~30 m · Cobertura Celda",
-    coords: [41.7345, 2.4410],
-    radioMetros: 30,
-    direccionSugerida: "Ctra. BV-5114 PK 6, Montseny",
-    tipologia: "PROT_CIVIL",
-    prioridad: "MEDIA",
-    saludoInicial: "Buenas, hay una rama grande y un árbol caído ocupando casi toda la carretera con lluvia intensa y poca visibilidad.",
-    respuestas: {
-      respira: "Yo estoy bien dentro del coche, no hay heridos.",
-      consciente: "Totalmente consciente, solo bloqueado por el árbol en la calzada.",
-      donde: "Carretera BV-5114, alrededor del kilómetro 6, zona del Montseny.",
-      constantes: "Sin novedades médicas, solo lluvia fuerte y niebla.",
-      sangrado: "Sin heridos ni sangrados.",
-      rcp: "No hace falta RCP, no hay personas afectadas.",
-      defecto: "El árbol sigue cruzado en la BV-5114 y pasan pocos coches."
-    }
-  },
-  {
-    id: "EXP-2026-0117",
-    telefono: "690 842 156",
-    aml: "AML Precisión ~15 m · GPS Activo",
-    coords: [41.3879, 2.1699],
-    radioMetros: 15,
-    direccionSugerida: "Plaça de Catalunya, 1, Barcelona",
-    tipologia: "SEGURIDAD",
-    prioridad: "MEDIA",
-    saludoInicial: "Hola, hay un joven mareado y desorientado sentado en un banco de la plaza que no sabe dónde está ni qué día es.",
-    respuestas: {
-      respira: "Respira con normalidad, a un ritmo tranquilo.",
-      consciente: "Responde cuando le hablas, pero está desorientado en tiempo y lugar.",
-      donde: "En Plaça de Catalunya número 1, Barcelona, cerca de la fuente.",
-      constantes: "No tengo equipo médico, parece tener calor o bajada de azúcar.",
-      sangrado: "No tiene golpes ni sangrado.",
-      rcp: "No está en parada, respira bien.",
-      defecto: "Sigo aquí con él en Plaça de Catalunya esperando ayuda."
     }
   }
 ];
