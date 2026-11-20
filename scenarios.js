@@ -1,346 +1,122 @@
 const ESCENARIOS_112 = [
   {
-    id: "CASO-01",
-    telefono: "644 101 201",
-    coords: [41.6881, 2.4895],
+    id: "EXP-2026-0112",
+    telefono: "644 218 903",
+    aml: "AML Precisión ~12 m · GPS Activo",
+    coords: [41.6894, 2.4922],
     radioMetros: 15,
-    aml: "AML GPS · Precisión 15m",
-    direccionSugerida: "Carretera C-35, Sant Celoni",
+    direccionSugerida: "Av. del Montseny, 48, Sant Celoni",
+    tipologia: "SANITARIO",
+    prioridad: "ALTA",
+    saludoInicial: "¡Por favor, ayuda! Un hombre de unos 62 años se ha desplomado en la acera y cuesta que reaccione.",
+    respuestas: {
+      respira: "Respira de forma entrecortada y con ruidos raros, no parece normal.",
+      consciente: "Apenas abre los ojos cuando le hablo fuerte, no contesta con claridad.",
+      donde: "Estamos en la avenida del Montseny número 48, en Sant Celoni, cerca de la farmacia.",
+      constantes: "No tengo tensiómetro ni pulsioxímetro aquí, pero está muy pálido y sudoroso.",
+      sangrado: "No tiene heridas sangrantes visibles.",
+      rcp: "Vale, pongo las manos en el centro del pecho y sigo el ritmo que me digas.",
+      defecto: "Estoy aquí con él en Sant Celoni, dime qué debo hacer."
+    }
+  },
+  {
+    id: "EXP-2026-0113",
+    telefono: "689 504 117",
+    aml: "AML Precisión ~25 m · Red + GPS",
+    coords: [41.6961, 2.4558],
+    radioMetros: 25,
+    direccionSugerida: "Carrer Major, 14, Santa Maria de Palautordera",
+    tipologia: "SANITARIO",
+    prioridad: "ALTA",
+    saludoInicial: "Hola, mi madre tiene un dolor muy fuerte en el centro del pecho que se le va hacia el brazo izquierdo y falta de aire.",
+    respuestas: {
+      respira: "Respira rápido y dice que le cuesta coger aire, está sentada en una silla.",
+      consciente: "Está consciente y orientada, aunque muy asustada y con náuseas.",
+      donde: "En Santa Maria de Palautordera, calle Major 14, primer piso.",
+      constantes: "No tenemos aparatos en casa, solo notamos la piel fría y pegajosa.",
+      sangrado: "No sangra por ningún lado.",
+      rcp: "De acuerdo, la mantengo sentada y sin darle nada de beber hasta que llegue la ambulancia.",
+      defecto: "Sigue con el dolor en el pecho aquí en la calle Major."
+    }
+  },
+  {
+    id: "EXP-2026-0114",
+    telefono: "612 773 490",
+    aml: "AML Precisión ~20 m · AP-7 PK 112",
+    coords: [41.6782, 2.4885],
+    radioMetros: 20,
+    direccionSugerida: "AP-7 PK 112, sentido Girona, término Sant Celoni",
     tipologia: "TRAFICO",
     prioridad: "ALTA",
-    saludoInicial: "¡Emergencia! Un motorista de unos 28 años ha chocado contra un coche y está en el suelo. Sangra mucho por el muslo derecho, tiene la pierna deformada y está muy pálido.",
+    saludoInicial: "¡Ha habido un choque entre dos turismos en la AP-7! Hay humo en el capó de uno de los coches y una persona que no sale.",
     respuestas: {
-      donde: "Estamos en la carretera en Sant Celoni, justo donde ha ocurrido el choque con el coche.",
-      respira: "Respira rápido, a unas 28 respiraciones por minuto, y marca 91% de saturación sin oxígeno.",
-      consciente: "Abre los ojos cuando le hablo, dice palabras que no se entienden bien y localiza el dolor.",
-      sangrado: "Tiene un sangrado abundante en el muslo derecho y la extremidad está deformada.",
-      constantes: "Pulso rápido a 132, tensión baja de 85/55 y temperatura de 35,2 grados.",
-      defecto: "Por favor, venid rápido, pierde mucha sangre por el muslo derecho y está pálido y frío."
+      respira: "La persona del coche delantero respira, pero se queja mucho del pecho.",
+      consciente: "Está consciente pero aturdida, responde con frases cortas.",
+      donde: "En la autopista AP-7, punto kilométrico 112 sentido Girona, en el carril derecho.",
+      constantes: "No puedo medir constantes, estamos en el arcén apartados del tráfico.",
+      sangrado: "Tiene un corte en la frente que sangra un poco.",
+      rcp: "Entendido, no intentamos moverla del coche y avisamos a los demás para que no se acerquen.",
+      defecto: "Seguimos en el PK 112 de la AP-7, se ve humo blanco del motor."
     }
   },
   {
-    id: "CASO-02",
-    telefono: "644 102 202",
-    coords: [41.6085, 2.2882],
-    radioMetros: 20,
-    aml: "AML GPS · Precisión 20m",
-    direccionSugerida: "Calle Girona, Granollers",
-    tipologia: "SANITARIO",
-    prioridad: "ALTA",
-    saludoInicial: "Hola, por favor, una ambulancia. Una mujer de 62 años tiene un dolor opresivo en el pecho desde hace 40 minutos, está sudorosa, pálida y dice que siente como si se fuera a morir.",
-    respuestas: {
-      donde: "Estamos en un domicilio en Granollers.",
-      consciente: "Está alerta, con los ojos abiertos, habla coherente y obedece órdenes.",
-      respira: "Respira a unas 24 por minuto y tiene saturación del 94% al aire.",
-      constantes: "Frecuencia cardíaca de 110, tensión arterial de 160/95 y temperatura de 36,5 grados.",
-      defecto: "Le aprieta mucho el pecho desde hace 40 minutos, suda frío y está muy asustada."
-    }
-  },
-  {
-    id: "CASO-03",
-    telefono: "644 103 203",
-    coords: [41.3879, 2.1699],
+    id: "EXP-2026-0115",
+    telefono: "655 190 822",
+    aml: "AML Precisión ~18 m · GPS Activo",
+    coords: [41.4298, 2.1812],
     radioMetros: 18,
-    aml: "AML GPS · Precisión 18m",
-    direccionSugerida: "Eixample, Barcelona",
-    tipologia: "SANITARIO",
-    prioridad: "ALTA",
-    saludoInicial: "Ayuda por favor, hemos encontrado a un hombre de 75 años inconsciente en su casa. No vemos golpes ni heridas, respira solo pero hace un ruido raro al respirar.",
-    respuestas: {
-      respira: "Respira muy despacio, a unas 8 por minuto, con respiración ruidosa y saturación del 86%.",
-      consciente: "No abre los ojos, hace sonidos incomprensibles y presenta flexión anormal ante el dolor.",
-      constantes: "Pulso lento a 48, tensión de 90/60 y temperatura de 35,8 grados.",
-      donde: "En el domicilio del paciente en Barcelona, sin traumatismos visibles.",
-      defecto: "No despierta, hace ruido al respirar y está muy bajo de constantes."
-    }
-  },
-  {
-    id: "CASO-04",
-    telefono: "644 104 204",
-    coords: [41.5463, 2.1086],
-    radioMetros: 20,
-    aml: "AML GPS · Precisión 20m",
-    direccionSugerida: "Centre, Sabadell",
-    tipologia: "SANITARIO",
-    prioridad: "ALTA",
-    saludoInicial: "Hola, una chica de 24 años con asma no puede casi ni respirar. Habla entrecortada y usa musculatura accesoria.",
-    respuestas: {
-      respira: "Respira muy deprisa, a 34 por minuto, saturación de 88% al aire y usa musculatura accesoria.",
-      consciente: "Está alerta, ojos abiertos, habla entrecortada pero coherente y obedece órdenes.",
-      constantes: "Frecuencia cardíaca de 138, tensión de 145/85 y temperatura de 36,8 grados.",
-      defecto: "Tiene asma y está ahogándose, apenas puede terminar las frases."
-    }
-  },
-  {
-    id: "CASO-05",
-    telefono: "644 105 205",
-    coords: [41.9794, 2.8214],
-    radioMetros: 15,
-    aml: "AML GPS · Precisión 15m",
-    direccionSugerida: "Eixample, Girona",
-    tipologia: "SANITARIO",
-    prioridad: "ALTA",
-    saludoInicial: "Hola, llamo porque un hombre de 69 años hace unos 25 minutos que tiene desviación de la comisura bucal, pérdida de fuerza en brazo derecho y dificultad para hablar.",
-    respuestas: {
-      consciente: "Está alerta, abre los ojos espontáneamente, habla con palabras inadecuadas y obedece órdenes sencillas.",
-      respira: "Respira bien a 18 por minuto con saturación del 97%.",
-      constantes: "Frecuencia cardíaca de 88, tensión alta de 190/105 y temperatura de 36,7 grados.",
-      defecto: "Empezó hace 25 minutos con la boca torcida, debilidad en el brazo derecho y alteración del habla."
-    }
-  },
-  {
-    id: "CASO-06",
-    telefono: "644 106 206",
-    coords: [41.1189, 1.2445],
-    radioMetros: 25,
-    aml: "AML GPS · Precisión 25m",
-    direccionSugerida: "Part Baixa, Tarragona",
-    tipologia: "SANITARIO",
-    prioridad: "ALTA",
-    saludoInicial: "Por favor, una ambulancia urgente. Una mujer de 81 años ha tenido dos episodios de vómitos con sangre. Está muy pálida, sudorosa y mareada.",
-    respuestas: {
-      constantes: "Frecuencia cardíaca de 125, tensión baja de 82/48 y temperatura de 35,9 grados.",
-      respira: "Frecuencia respiratoria de 26 y saturación del 93% al aire.",
-      consciente: "Abre los ojos al hablarle, responde con frases confusas y localiza el dolor.",
-      defecto: "Ha tenido dos vómitos con sangre, está pálida, sudorosa y mareada."
-    }
-  },
-  {
-    id: "CASO-07",
-    telefono: "644 107 207",
-    coords: [41.6176, 0.6200],
-    radioMetros: 20,
-    aml: "AML GPS · Precisión 20m",
-    direccionSugerida: "Zona Alta, Lleida",
-    tipologia: "SANITARIO",
-    prioridad: "MEDIA",
-    saludoInicial: "Hola, un hombre de 55 años diabético está desorientado en su casa, con sudoración intensa y temblores. Glucemia capilar de 42 mg/dL.",
-    respuestas: {
-      consciente: "Abre los ojos al hablarle, conversación confusa y obedece órdenes. Glucemia de 42 mg/dL.",
-      respira: "Frecuencia respiratoria de 20 y saturación del 98%.",
-      constantes: "Frecuencia cardíaca de 115, tensión de 135/80 y temperatura de 36,2 grados.",
-      defecto: "Es diabético, está desorientado con sudoración y temblores, y glucemia de 42 mg/dL."
-    }
-  },
-  {
-    id: "CASO-08",
-    telefono: "644 108 208",
-    coords: [41.5421, 2.4445],
-    radioMetros: 20,
-    aml: "AML GPS · Precisión 20m",
-    direccionSugerida: "Centre, Mataró",
-    tipologia: "SANITARIO",
-    prioridad: "ALTA",
-    saludoInicial: "Hola, una mujer de 73 años tiene fiebre, escalofríos, confusión y sospecha de infección urinaria, con empeoramiento en las últimas horas.",
-    respuestas: {
-      constantes: "Temperatura de 39,4 grados, frecuencia cardíaca de 128 y tensión de 88/52.",
-      respira: "Respira a 30 por minuto con saturación del 92% al aire.",
-      consciente: "Está alerta con nueva confusión, ojos abiertos, conversación confusa y obedece órdenes.",
-      defecto: "Fiebre, escalofríos y confusión de inicio reciente por sospecha de infección urinaria."
-    }
-  },
-  {
-    id: "CASO-09",
-    telefono: "644 109 209",
-    coords: [41.6910, 2.4920],
-    radioMetros: 15,
-    aml: "AML GPS · Precisión 15m",
-    direccionSugerida: "Sant Celoni",
-    tipologia: "SANITARIO",
-    prioridad: "ALTA",
-    saludoInicial: "Un hombre de 35 años ha caído de una escalera desde tres metros. Presenta herida en región frontal y vómitos.",
-    respuestas: {
-      consciente: "Abre los ojos al dolor, emite sonidos incomprensibles y presenta extensión anormal al dolor.",
-      respira: "Frecuencia respiratoria de 10 y saturación del 89% al aire.",
-      constantes: "Frecuencia cardíaca de 52, tensión arterial de 185/100 y temperatura de 36 grados.",
-      defecto: "Caída desde tres metros con herida frontal y vómitos."
-    }
-  },
-  {
-    id: "CASO-10",
-    telefono: "644 110 210",
-    coords: [41.3917, 2.1649],
-    radioMetros: 15,
-    aml: "AML GPS · Precisión 15m",
-    direccionSugerida: "Eixample, Barcelona",
-    tipologia: "SANITARIO",
-    prioridad: "ALTA",
-    saludoInicial: "Por favor, urgente, una mujer de 32 años presenta urticaria generalizada, hinchazón de labios, sensación de cierre de garganta y dificultad respiratoria tras ingerir frutos secos.",
-    respuestas: {
-      constantes: "Tensión de 75/40, frecuencia cardíaca de 140 y temperatura de 36,6 grados.",
-      respira: "Frecuencia respiratoria de 32 y saturación del 89% al aire.",
-      consciente: "Está alerta, habla coherentemente y obedece órdenes.",
-      defecto: "Reacción tras frutos secos con urticaria, hinchazón labial, cierre de garganta y dificultad respiratoria."
-    }
-  },
-  {
-    id: "CASO-11",
-    telefono: "644 111 211",
-    coords: [41.6150, 2.2900],
-    radioMetros: 20,
-    aml: "AML GPS · Precisión 20m",
-    direccionSugerida: "Granollers",
-    tipologia: "SANITARIO",
-    prioridad: "ALTA",
-    saludoInicial: "Hola, un varón de 78 años con EPOC conocido presenta disnea progresiva, somnolencia y respiración superficial.",
-    respuestas: {
-      respira: "Frecuencia respiratoria de 9, respiración superficial y saturación del 84% al aire.",
-      consciente: "Abre los ojos al hablarle, conversación confusa y obedece órdenes.",
-      constantes: "Frecuencia cardíaca de 115, tensión de 150/90 y temperatura de 37,1 grados.",
-      defecto: "EPOC reagudizado con disnea progresiva, somnolencia y respiración superficial."
-    }
-  },
-  {
-    id: "CASO-12",
-    telefono: "644 112 212",
-    coords: [41.3851, 2.1592],
-    radioMetros: 15,
-    aml: "AML GPS · Precisión 15m",
-    direccionSugerida: "Barcelona",
+    direccionSugerida: "Passeig de la Vall d'Hebron, 119, Barcelona",
     tipologia: "INCENDIO",
     prioridad: "ALTA",
-    saludoInicial: "Mujer de 40 años rescatada de un incendio doméstico. Presenta quemaduras en brazos y tórax, hollín alrededor de la boca y voz ronca.",
+    saludoInicial: "Emergencias, está saliendo mucho humo negro por la ventana de un tercer piso y suena la alarma de incendios.",
     respuestas: {
-      respira: "Frecuencia respiratoria de 30, saturación del 90% al aire, hollín peribucal y voz ronca.",
-      constantes: "Frecuencia cardíaca de 125, tensión de 95/60 y temperatura de 35,5 grados.",
-      consciente: "Ojos abiertos espontáneamente, conversación coherente y obedece órdenes.",
-      defecto: "Rescatada de incendio doméstico con quemaduras en brazos y tórax, hollín y voz ronca."
+      respira: "En el rellano huele fuerte a humo, los vecinos están bajando por las escaleras.",
+      consciente: "Por ahora todos los que bajan están conscientes, pero hay una persona mayor en el segundo.",
+      donde: "Passeig de la Vall d'Hebron 119, en Barcelona.",
+      constantes: "No tenemos mediciones, hay bastante humo en la escalera.",
+      sangrado: "Nadie sangra por el momento.",
+      rcp: "De acuerdo, no usamos el ascensor y bajamos con cuidado.",
+      defecto: "El humo sigue saliendo por la ventana del tercer piso."
     }
   },
   {
-    id: "CASO-13",
-    telefono: "644 113 213",
-    coords: [41.6894, 2.4922],
-    radioMetros: 20,
-    aml: "AML GPS · Precisión 20m",
-    direccionSugerida: "Sant Celoni",
-    tipologia: "SANITARIO",
-    prioridad: "MEDIA",
-    saludoInicial: "Hola, un varón de 48 años tiene dolor abdominal intenso, vómitos y abdomen rígido. Está pálido y con sudoración fría.",
-    respuestas: {
-      constantes: "Frecuencia cardíaca de 118, tensión de 95/60 y temperatura de 38,1 grados.",
-      respira: "Frecuencia respiratoria de 24 y saturación del 96% al aire.",
-      consciente: "Ojos abiertos espontáneamente, conversación coherente y obedece órdenes.",
-      defecto: "Dolor abdominal intenso, vómitos, abdomen rígido, palidez y sudoración fría."
-    }
-  },
-  {
-    id: "CASO-14",
-    telefono: "644 114 214",
-    coords: [41.5463, 2.1086],
-    radioMetros: 20,
-    aml: "AML GPS · Precisión 20m",
-    direccionSugerida: "Sabadell",
-    tipologia: "SANITARIO",
-    prioridad: "ALTA",
-    saludoInicial: "Mujer de 19 años encontrada tras una crisis convulsiva generalizada. Presenta respiración ruidosa y abundante saliva.",
-    respuestas: {
-      consciente: "Abre los ojos al dolor, emite sonidos incomprensibles y localiza el dolor.",
-      respira: "Frecuencia respiratoria de 12, saturación del 90% al aire, respiración ruidosa y abundante saliva.",
-      constantes: "Frecuencia cardíaca de 118, tensión de 145/85 y temperatura de 37,2 grados.",
-      defecto: "Post-convulsión generalizada con respiración ruidosa y abundante saliva."
-    }
-  },
-  {
-    id: "CASO-15",
-    telefono: "644 115 215",
-    coords: [41.3413, 2.1072],
-    radioMetros: 20,
-    aml: "AML GPS · Precisión 20m",
-    direccionSugerida: "L'Hospitalet de Llobregat",
-    tipologia: "SANITARIO",
-    prioridad: "ALTA",
-    saludoInicial: "Varón de 72 años con antecedentes de insuficiencia cardíaca. Presenta disnea, extremidades frías, sudoración y alteración del estado mental.",
-    respuestas: {
-      constantes: "Tensión de 78/45, frecuencia cardíaca de 125 y temperatura de 35,8 grados, extremidades frías.",
-      respira: "Frecuencia respiratoria de 32 y saturación del 88% al aire.",
-      consciente: "Abre los ojos al hablarle, conversación confusa y obedece órdenes.",
-      defecto: "Disnea, extremidades frías, sudoración y alteración del estado mental."
-    }
-  },
-  {
-    id: "CASO-16",
-    telefono: "644 116 216",
-    coords: [41.9794, 2.8214],
-    radioMetros: 18,
-    aml: "AML GPS · Precisión 18m",
-    direccionSugerida: "Girona",
-    tipologia: "SANITARIO",
-    prioridad: "ALTA",
-    saludoInicial: "Varón de 27 años encontrado en una habitación con varios envases de medicamentos vacíos. Presenta respiración lenta y pupilas puntiformes.",
-    respuestas: {
-      respira: "Frecuencia respiratoria de 6 y saturación del 82% al aire.",
-      consciente: "No abre los ojos, no emite respuesta verbal y retira ante el dolor. Pupilas puntiformes.",
-      constantes: "Frecuencia cardíaca de 48, tensión de 90/55 y temperatura de 35,6 grados.",
-      defecto: "Posible intoxicación medicamentosa con respiración lenta y pupilas puntiformes."
-    }
-  },
-  {
-    id: "CASO-17",
-    telefono: "644 117 217",
-    coords: [41.3839, 2.1952],
-    radioMetros: 15,
-    aml: "AML GPS · Precisión 15m",
-    direccionSugerida: "Ciutat Vella, Barcelona",
-    tipologia: "SANITARIO",
-    prioridad: "ALTA",
-    saludoInicial: "Varón de 30 años con herida penetrante en el tórax. Presenta dificultad respiratoria, dolor torácico y disminución del murmullo vesicular derecho.",
-    respuestas: {
-      respira: "Frecuencia respiratoria de 36, saturación del 86% al aire y disminución del murmullo vesicular derecho.",
-      constantes: "Frecuencia cardíaca de 135, tensión de 85/50 y temperatura de 36 grados.",
-      consciente: "Ojos abiertos espontáneamente, conversación coherente y obedece órdenes.",
-      defecto: "Herida penetrante torácica con dificultad respiratoria y dolor torácico."
-    }
-  },
-  {
-    id: "CASO-18",
-    telefono: "644 118 218",
-    coords: [41.7345, 2.4280],
+    id: "EXP-2026-0116",
+    telefono: "671 334 908",
+    aml: "AML Precisión ~30 m · Cobertura Celda",
+    coords: [41.7345, 2.4410],
     radioMetros: 30,
-    aml: "AML GPS · Precisión 30m",
-    direccionSugerida: "Zona Montseny",
-    tipologia: "SANITARIO",
-    prioridad: "ALTA",
-    saludoInicial: "Mujer de 67 años encontrada en el exterior tras horas expuesta al frío. Está somnolienta, con piel fría y temblores.",
+    direccionSugerida: "Ctra. BV-5114 PK 6, Montseny",
+    tipologia: "PROT_CIVIL",
+    prioridad: "MEDIA",
+    saludoInicial: "Buenas, hay una rama grande y un árbol caído ocupando casi toda la carretera con lluvia intensa y poca visibilidad.",
     respuestas: {
-      constantes: "Temperatura de 31,5 grados, frecuencia cardíaca de 45 y tensión de 90/55.",
-      respira: "Frecuencia respiratoria de 10 y saturación del 92% al aire.",
-      consciente: "Abre los ojos al hablarle, emite palabras incomprensibles y localiza el dolor.",
-      defecto: "Exposición al frío con somnolencia, piel fría y temblores."
+      respira: "Yo estoy bien dentro del coche, no hay heridos.",
+      consciente: "Totalmente consciente, solo bloqueado por el árbol en la calzada.",
+      donde: "Carretera BV-5114, alrededor del kilómetro 6, zona del Montseny.",
+      constantes: "Sin novedades médicas, solo lluvia fuerte y niebla.",
+      sangrado: "Sin heridos ni sangrados.",
+      rcp: "No hace falta RCP, no hay personas afectadas.",
+      defecto: "El árbol sigue cruzado en la BV-5114 y pasan pocos coches."
     }
   },
   {
-    id: "CASO-19",
-    telefono: "644 119 219",
-    coords: [41.1235, 1.2414],
-    radioMetros: 20,
-    aml: "AML GPS · Precisión 20m",
-    direccionSugerida: "Tarragona",
-    tipologia: "SANITARIO",
-    prioridad: "ALTA",
-    saludoInicial: "Varón de 80 años con antecedentes cardíacos. Presenta disnea intensa, ortopnea, crepitantes bilaterales y expectoración espumosa.",
-    respuestas: {
-      respira: "Frecuencia respiratoria de 34, saturación del 85% al aire, ortopnea, crepitantes y expectoración espumosa.",
-      constantes: "Frecuencia cardíaca de 120, tensión de 185/105 y temperatura de 36,4 grados.",
-      consciente: "Alerta con confusión de nueva aparición, ojos abiertos, conversación confusa y obedece órdenes.",
-      defecto: "Disnea intensa con ortopnea, crepitantes bilaterales y expectoración espumosa."
-    }
-  },
-  {
-    id: "CASO-20",
-    telefono: "644 120 220",
-    coords: [41.6176, 0.6200],
+    id: "EXP-2026-0117",
+    telefono: "690 842 156",
+    aml: "AML Precisión ~15 m · GPS Activo",
+    coords: [41.3879, 2.1699],
     radioMetros: 15,
-    aml: "AML GPS · Precisión 15m",
-    direccionSugerida: "Lleida",
-    tipologia: "TRAFICO",
-    prioridad: "ALTA",
-    saludoInicial: "Mujer de 26 años atropellada por un vehículo. Presenta deformidad en pelvis, dolor abdominal y sangrado en una pierna.",
+    direccionSugerida: "Plaça de Catalunya, 1, Barcelona",
+    tipologia: "SEGURIDAD",
+    prioridad: "MEDIA",
+    saludoInicial: "Hola, hay un joven mareado y desorientado sentado en un banco de la plaza que no sabe dónde está ni qué día es.",
     respuestas: {
-      constantes: "Frecuencia cardíaca de 145, tensión de 70/40 y temperatura de 35 grados.",
-      respira: "Frecuencia respiratoria de 30 y saturación del 90% al aire.",
-      consciente: "Abre los ojos al dolor, emite palabras incomprensibles y localiza el dolor.",
-      defecto: "Atropello con deformidad en pelvis, dolor abdominal y sangrado en pierna."
+      respira: "Respira con normalidad, a un ritmo tranquilo.",
+      consciente: "Responde cuando le hablas, pero está desorientado en tiempo y lugar.",
+      donde: "En Plaça de Catalunya número 1, Barcelona, cerca de la fuente.",
+      constantes: "No tengo equipo médico, parece tener calor o bajada de azúcar.",
+      sangrado: "No tiene golpes ni sangrado.",
+      rcp: "No está en parada, respira bien.",
+      defecto: "Sigo aquí con él en Plaça de Catalunya esperando ayuda."
     }
   }
 ];
