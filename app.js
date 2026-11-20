@@ -27,6 +27,7 @@ let escenarioActual = null;
 let segundos = 0;
 let intervaloReloj = null;
 let sonidoActivo = true;
+let audioDesbloqueado = false;
 let unidadesDespachadas = [];
 
 // --- GUARDIA DE 12 HORAS (43200 s) · LLAMADA CADA 15 MIN (900 s) ---
@@ -52,6 +53,19 @@ const RESPUESTAS_CAPS = {
   'CAP Protecció Civil': "CECAT Protecció Civil de Catalunya, le escuchamos. ¿Qué incidencia o activación de plan se reporta?"
 };
 
+function desbloquearAudio() {
+  audioDesbloqueado = true;
+  if (!sonidoActivo) return;
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if (!AudioCtx) return;
+  try {
+    const ctx = new AudioCtx();
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
+  } catch (_) {}
+}
+
 function reproducirTono(frecuencia = 740, duracion = 0.14, tipo = 'sine') {
   if (!sonidoActivo) return;
   const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -59,6 +73,9 @@ function reproducirTono(frecuencia = 740, duracion = 0.14, tipo = 'sine') {
 
   try {
     const ctx = new AudioCtx();
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.type = tipo;
@@ -87,6 +104,7 @@ function toggleSonido() {
   sonidoActivo = !sonidoActivo;
   const btn = document.getElementById('btnSonido');
   if (btn) btn.innerText = sonidoActivo ? '🔊 ON' : '🔇 OFF';
+  if (sonidoActivo) reproducirTono(880, 0.1, 'sine');
 }
 
 function formatoCrono(totalSeg) {
@@ -159,7 +177,7 @@ function centrarEnIncidente() {
 }
 
 function sintetizarVoz(texto, rate = 1.06) {
-  if (!('speechSynthesis' in window) || !texto) return;
+  if (!('speechSynthesis' in window) || !texto || !sonidoActivo) return;
   try {
     window.speechSynthesis.cancel();
     const voz = new SpeechSynthesisUtterance(texto);
@@ -179,22 +197,24 @@ function hablarEnLinea(etiqueta, texto) {
   sintetizarVoz(texto, 1.06);
 }
 
-function iniciarCronometroSiNoActivo() {
-  if (intervaloReloj) return;
-  segundos = 0;
-  const relojEl = document.getElementById('cronometro');
-  if (relojEl) {
-    relojEl.classList.remove('text-red-500');
-    relojEl.innerText = '00:00';
-  }
-  intervaloReloj = setInterval(() => {
-    segundos++;
-    const r = document.getElementById('cronometro');
-    if (r) {
-      r.innerText = formatoCrono(segundos);
-      if (segundos >= 60) r.classList.add('text-red-500');
+function iniciarCronometroAtencion(reiniciar = true) {
+  if (reiniciar || !intervaloReloj) {
+    if (intervaloReloj) clearInterval(intervaloReloj);
+    segundos = 0;
+    const relojEl = document.getElementById('cronometro');
+    if (relojEl) {
+      relojEl.classList.remove('text-red-500');
+      relojEl.innerText = '00:00';
     }
-  }, 1000);
+    intervaloReloj = setInterval(() => {
+      segundos++;
+      const r = document.getElementById('cronometro');
+      if (r) {
+        r.innerText = formatoCrono(segundos);
+        if (segundos >= 60) r.classList.add('text-red-500');
+      }
+    }, 1000);
+  }
 }
 
 // --- GUARDIA DE 12 HORAS ---
@@ -285,9 +305,7 @@ function toggleGuardia12h(automatica = false) {
         ? 'GUARDIA DE 12H INICIADA AUTOMÁTICAMENTE AL ENTRAR. Llamadas cada 15 minutos.'
         : 'GUARDIA DE 12H INICIADA. Llamadas automáticas cada 15 minutos.'
     );
-    if (!automatica) {
-      reproducirTono(780, 0.14, 'triangle');
-    }
+    reproducirTono(780, 0.14, 'triangle');
     actualizarIndicadoresGuardia();
     iniciarTickGuardia();
   } else {
@@ -375,9 +393,9 @@ function cargarLlamadaEnConsola(esc) {
     if (el) el.innerText = val;
   };
 
-  setText('idIncidente', esc.id);
-  setVal('telAlertante', esc.telefono);
-  setVal('amlStatus', esc.aml);
+  setText('idIncidente', esc.id || 'EXP-112');
+  setVal('telAlertante', esc.telefono || '600 000 000');
+  setVal('amlStatus', esc.aml || 'AML Activo');
   setVal('direccion', esc.direccionSugerida || '');
   setVal('tipologia', esc.tipologia || '');
   setVal('prioridad', esc.prioridad || 'ALTA');
@@ -408,11 +426,8 @@ function cargarLlamadaEnConsola(esc) {
     setText('coordsText', `${lat.toFixed(4)}, ${lng.toFixed(4)}`);
   }
 
-  clearInterval(intervaloReloj);
-  intervaloReloj = null;
-  iniciarCronometroSiNoActivo();
-
-  hablarEnLinea('Requirente', esc.saludoInicial);
+  iniciarCronometroAtencion(true);
+  hablarEnLinea('Requirente', esc.saludoInicial || 'Emergencias 112, necesito ayuda.');
 }
 
 function iniciarLlamada() {
@@ -420,11 +435,11 @@ function iniciarLlamada() {
   setTimeout(() => reproducirTono(880, 0.16, 'sine'), 180);
   const esc = obtenerSiguienteEscenario();
   if (!esc) {
-    log('No hay escenarios cargados en ESCENARIOS_112.');
+    log('AVISO: No hay escenarios cargados en ESCENARIOS_112.');
     return;
   }
   cargarLlamadaEnConsola(esc);
-  log(`Llamada 112 iniciada manualmente (${esc.id}).`);
+  log(`Llamada 112 iniciada (${esc.id}).`);
 }
 
 // --- CAPs Y DIRECTORIO CATALUNYA ---
@@ -444,7 +459,7 @@ function llamarCAP(nombreCAP) {
   if (btnHablar) btnHablar.disabled = false;
   if (btnColgar) btnColgar.disabled = false;
 
-  if (!intervaloReloj) iniciarCronometroSiNoActivo();
+  iniciarCronometroAtencion(false);
 
   const saludoCAP = RESPUESTAS_CAPS[nombreCAP] || `${nombreCAP}, adelante.`;
   log(`Llamada telefónica establecida con ${nombreCAP}.`);
@@ -488,7 +503,7 @@ function llamarCentroSeleccionado() {
   if (btnHablar) btnHablar.disabled = false;
   if (btnColgar) btnColgar.disabled = false;
 
-  if (!intervaloReloj) iniciarCronometroSiNoActivo();
+  iniciarCronometroAtencion(false);
 
   if (Array.isArray(centro.coords) && centro.coords.length === 2) {
     const [lat, lng] = centro.coords;
@@ -546,13 +561,4 @@ function generarRespuestaVoz(textoUsuario) {
     return `Preaviso registrado en ${centroActivoObj.nombre} para el expediente ${exp}. Urgencias alertadas para recepción de paciente.`;
   }
   if (centroActivoObj && centroActivoObj.categoria === 'MOSSOS') {
-    return `Comissaria de Mossos d'Esquadra enterada en ${dir}, expediente ${exp}. Coordinamos dotación.`;
-  }
-  if (centroActivoObj && centroActivoObj.categoria === 'BOMBERS') {
-    return `Parc de Bombers recibido aviso en ${dir}, expediente ${exp}. Valoramos dotación y acceso.`;
-  }
-  if (centroActivoObj && centroActivoObj.categoria === 'PROTECCIO_CIVIL') {
-    return `Protecció Civil anotada la incidencia en ${dir}, expediente ${exp}. Queda en seguimiento.`;
-  }
-
-  return `Recibido en ${modoConversacion || 'central'} para el exped
+    ret
